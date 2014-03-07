@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NFCHelloWorld</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_label_1">Input something to write in your Tags!</string>
+    <string name="text_label_2">Your Tag contains:</string>
+    <string name="tagInfoHint">Tag info</string>
+</resources>

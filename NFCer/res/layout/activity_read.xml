@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@android:color/darker_gray"
+    tools:context=".MainActivity" >
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/options_title" 
+            android:textSize="20sp"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="#FFFFFF"/>
+    
+    <LinearLayout 
+	    android:id="@+id/LinearLayout2"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:background="#FFFFFF">
+	    
+	    <TextView
+	        android:id="@+id/nfcOptionText"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginTop="10dp"
+	        android:drawableLeft="@drawable/ic_nfc_text"
+	        android:drawableRight="@drawable/ic_go"
+	        android:gravity="center_vertical"
+	        android:onClick="onOptionSelected"
+	        android:text="@string/nfc_option_text"
+	        android:textSize="20sp" />
+
+        <View
+			android:layout_width="fill_parent"
+			android:layout_height="1dp"
+			android:background="@android:color/darker_gray"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"/>
+	   
+	    <TextView
+	        android:id="@+id/nfcOptionURI"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginTop="10dp"
+	        android:drawableLeft="@drawable/ic_nfc_uri"
+	        android:drawableRight="@drawable/ic_go"
+	        android:gravity="center_vertical"
+	        android:onClick="onOptionSelected"
+	        android:text="@string/nfc_option_uri"
+	        android:textSize="20sp" />
+
+	    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
+	    <TextView
+	        android:id="@+id/textToWrite"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginTop="10dp"
+	        android:hint="@string/nfc_write_hint"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+	    <Button
+	        android:id="@+id/toWriteBtn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:onClick="onClickButton"
+	        android:text="@string/button_write" />
+
+    </LinearLayout>
+</LinearLayout>

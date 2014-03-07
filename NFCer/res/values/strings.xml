@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NFCer</string>
+    
+    <string name="action_info">Info</string>
+    <string name="action_write">Write Tag</string>
+    <string name="action_read">Read Tag</string>
+    
+    <string name="action_info_text">Developed by vicmonmena</string>
+    
+    <string name="options_title">What do you want to do?</string>
+    <string name="nfc_option_text">Write a text</string>
+    <string name="nfc_option_text_hint">&#8230;</string>
+    <string name="nfc_option_uri">Write an URI</string>
+    <string name="nfc_option_uri_hint">&#8230;</string>
+    
+    <string name="nfc_write_hint">&#8230;</string>
+    <string name="button_write">Write!</string>
+    
+    <string name="write_tag_validation">Please input text to write!</string>
+    <string name="custom_write_dialog_title">Input your text or URI here</string>
+    <string name="custom_write_dialog_button">Back</string>
+</resources>
