@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@android:color/darker_gray"
+    tools:context=".MainActivity" >
+    <TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/read_tag_title" 
+	    android:textSize="16sp"
+	    android:gravity="center_horizontal"
+	    android:padding="5dp"
+	    android:layout_marginBottom="5dp"
+	    android:background="#FFFFFF"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="horizontal"
+	        android:layout_weight="1"
+	        android:baselineAligned="false">
+	        
+		    <LinearLayout 
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:orientation="vertical"
+			    android:background="#FFFFFF"
+			    android:layout_weight="1">
+			    
+		        <TextView
+		            android:id="@+id/nfcTagTechnologyLbl"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="5dp"
+		            android:drawableLeft="@drawable/ic_nfc_technologies"
+		            android:gravity="center_vertical"
+		            android:padding="3dp"
+		            android:text="@string/nfc_tag_technology_lbl"
+		            android:textSize="18sp" />
+		
+			    <TextView
+			        android:id="@+id/nfcTagTechnologyText"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="5dp"
+			        android:padding="3dp"
+			        android:gravity="center_vertical"
+			        android:textSize="14sp"
+			        android:hint="@string/nfc_tag_technology_hint"/>
+		    </LinearLayout>
+		    
+	        <LinearLayout 
+	            android:layout_width="fill_parent"
+	            android:layout_height="fill_parent"
+	            android:layout_weight="1"
+	            android:orientation="vertical"
+	            android:background="#FFFFFF">
+			    
+			   <TextView
+			       android:id="@+id/nfcTagTypeLbl"
+			       android:layout_width="fill_parent"
+			       android:layout_height="wrap_content"
+			       android:layout_marginTop="5dp"
+			       android:drawableLeft="@drawable/ic_nfc_data_format"
+			       android:gravity="center_vertical"
+			       android:padding="3dp"
+			       android:text="@string/nfc_tag_type_lbl"
+			       android:textSize="18sp" />
+		
+			    <TextView
+			        android:id="@+id/nfcTagTypeText"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginBottom="5dp"
+			        android:padding="3dp"
+			        android:gravity="center_vertical"
+			        android:textSize="14sp"
+			        android:hint="@string/nfc_tag_type_hint"
+			        android:linksClickable="true"
+			        android:autoLink="web|email"/>
+		    </LinearLayout>
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1"
+	        android:background="#FFFFFF"
+	        android:orientation="vertical" >
+    
+                <TextView
+                   android:id="@+id/nfcTagContentLbl"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="5dp"
+                   android:drawableLeft="@drawable/ic_nfc_tag_content"
+                   android:gravity="center_vertical"
+                   android:padding="3dp"
+                   android:text="@string/nfc_tag_content_lbl"
+                   android:textSize="18sp" />
+        
+                <TextView
+                    android:id="@+id/nfcTagContentText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:padding="3dp"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:hint="@string/nfc_tag_content_hint"
+                    android:linksClickable="true"
+                    android:autoLink="web|email"/>
+            </LinearLayout>
+            
+    </LinearLayout>
+</LinearLayout>

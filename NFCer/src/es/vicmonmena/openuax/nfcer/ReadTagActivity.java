@@ -12,6 +12,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.TextUtils;
@@ -59,45 +60,6 @@ public class ReadTagActivity extends Activity{
      */
     private Tag myTag;
     
-    private static final String[] URI_PREFIXES = new String[] {
-        "",
-        "http://www.",
-        "https://www.",
-        "http://",
-        "https://",
-        "tel:",
-        "mailto:",
-        "ftp://anonymous:anonymous@",
-        "ftp://ftp.",
-        "ftps://",
-        "sftp://",
-        "smb://",
-        "nfs://",
-        "ftp://",
-        "dav://",
-        "news:",
-        "telnet://",
-        "imap:",
-        "rtsp://",
-        "urn:",
-        "pop:",
-        "sip:",
-        "sips:",
-        "tftp:",
-        "btspp://",
-        "btl2cap://",
-        "btgoep://",
-        "tcpobex://",
-        "irdaobex://",
-        "file://",
-        "urn:epc:id:",
-        "urn:epc:tag:",
-        "urn:epc:pat:",
-        "urn:epc:raw:",
-        "urn:epc:",
-        "urn:nfc:",
-    };
-    
     /**
      * Tag content.
      */
@@ -107,6 +69,11 @@ public class ReadTagActivity extends Activity{
      * Tag support technologies 
      */
     private TextView tagTechnologies;
+    
+    /**
+     * Tag Forum Type 
+     */
+    private TextView tagType;
     
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +87,8 @@ public class ReadTagActivity extends Activity{
         nfcAdapter = NfcAdapter.getDefaultAdapter(ReadTagActivity.this);
         
         if (nfcAdapter == null) {
-        	Toast.makeText(ReadTagActivity.this, "NFC not available", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(ReadTagActivity.this, "NFC not available", 
+        		Toast.LENGTH_SHORT).show();
         	finish();
         	return;
         }
@@ -150,6 +118,7 @@ public class ReadTagActivity extends Activity{
         
         tagContent = (TextView) findViewById(R.id.nfcTagContentText);
         tagTechnologies = (TextView) findViewById(R.id.nfcTagTechnologyText);
+        tagType = (TextView) findViewById(R.id.nfcTagTypeText);
 	}
 	
 	@Override
@@ -164,7 +133,8 @@ public class ReadTagActivity extends Activity{
 
         switch (item.getItemId()) {
 			case R.id.action_info:
-				Toast.makeText(this, getString(R.string.read_tag_info), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.read_tag_info), 
+					Toast.LENGTH_LONG).show();
 				return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,7 +143,6 @@ public class ReadTagActivity extends Activity{
     
     @Override
     protected void onNewIntent(Intent intent) {
-    	//super.onNewIntent(intent);
     	
     	Log.i(TAG, "onNewIntent...");
     	
@@ -186,17 +155,19 @@ public class ReadTagActivity extends Activity{
     			
     			String cadena = read(intent.getParcelableArrayExtra(
     				NfcAdapter.EXTRA_NDEF_MESSAGES));
-    			
-    			
+
     			tagContent.setText(cadena);
     		}
-    	} else {
-    		Log.i(TAG, "Action: " + action);
     	}
     	
     	// Obtenemos la tecnología de la etiqueta BFC que hemos leído
     	myTag=intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-    	tagTechnologies.setText(NFCerUtils.formatStringArray(myTag.getTechList(), ", "));
+    	tagTechnologies.setText(NFCerUtils.formatStringArray(
+    		myTag.getTechList(), ", "));
+    	
+    	// Obtenemos información sobre la etiqueta leída
+    	Ndef ndefTag = Ndef.get(myTag);
+    	tagType.setText(NFCerUtils.getNFCForumType(ndefTag.getType()));
     }
     
     @Override
@@ -226,6 +197,11 @@ public class ReadTagActivity extends Activity{
     	if (!TextUtils.isEmpty(tagTechnologies.getText())) {
     		outState.putString("technologies",tagTechnologies.getText().toString());
     	}
+    	
+    	if (!TextUtils.isEmpty(tagTechnologies.getText())) {
+    		outState.putString("tagtype",tagTechnologies.getText().toString());
+    	}
+    	
     	super.onSaveInstanceState(outState);
     }
     
@@ -239,6 +215,10 @@ public class ReadTagActivity extends Activity{
     		
     		if (!TextUtils.isEmpty(savedInstanceState.getString("technologies"))) {
     			tagContent.setText(savedInstanceState.getString("technologies"));
+    		}
+    		
+    		if (!TextUtils.isEmpty(savedInstanceState.getString("tagtype"))) {
+    			tagContent.setText(savedInstanceState.getString("tagtype"));
     		}
     	}
     	super.onRestoreInstanceState(savedInstanceState);
@@ -308,7 +288,7 @@ public class ReadTagActivity extends Activity{
          * the URI.
          */
         int pre = (int)payload[0];
-        String prefix = URI_PREFIXES[pre];
+        String prefix = NFCerUtils.URI_PREFIXES[pre];
         String uriStr = new StringBuilder()
             .append(prefix).append(new String(payload, 1, payload.length - 1))
             .toString();

@@ -32,8 +32,10 @@
     <string name="read_tag_title">Move the tag closer to your smartphone</string>
     
     <string name="nfc_tag_technology_lbl">Supported technologies</string>
+    <string name="nfc_tag_type_lbl">Tag data format</string>
     <string name="nfc_tag_content_lbl">Tag content</string>
     
-    <string name="nfc_tag_technology_hint">Tag technology</string>
-    <string name="nfc_tag_content_hint">Tag content</string>
+    <string name="nfc_tag_technology_hint">Technology</string>
+    <string name="nfc_tag_type_hint">Data format</string>
+    <string name="nfc_tag_content_hint">Content</string>
 </resources>
