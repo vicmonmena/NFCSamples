@@ -39,12 +39,15 @@ public class WriteTagActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+        
+        getActionBar().setDisplayShowHomeEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.write_menu, menu);
+        getMenuInflater().inflate(R.menu.base_menu, menu);
         return true;
     }
     
@@ -53,7 +56,7 @@ public class WriteTagActivity extends Activity{
 
         switch (item.getItemId()) {
 			case R.id.action_info:
-				Toast.makeText(this, getString(R.string.action_info_text), Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.write_tag_info), Toast.LENGTH_LONG).show();
 				return true;
             default:
                 return super.onOptionsItemSelected(item);

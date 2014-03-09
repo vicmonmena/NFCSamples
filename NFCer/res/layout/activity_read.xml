@@ -10,7 +10,7 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/options_title" 
+            android:text="@string/read_tag_title" 
             android:textSize="20sp"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -24,18 +24,26 @@
 	    android:orientation="vertical"
 	    android:background="#FFFFFF">
 	    
+        <TextView
+            android:id="@+id/nfcTagTechnologyLbl"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_nfc_technologies"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="@string/nfc_tag_technology_lbl"
+            android:textSize="20sp" />
+
 	    <TextView
-	        android:id="@+id/nfcOptionText"
+	        android:id="@+id/nfcTagTechnologyText"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="10dp"
-	        android:layout_marginTop="10dp"
-	        android:drawableLeft="@drawable/ic_nfc_text"
-	        android:drawableRight="@drawable/ic_go"
+	        android:padding="5dp"
 	        android:gravity="center_vertical"
-	        android:onClick="onOptionSelected"
-	        android:text="@string/nfc_option_text"
-	        android:textSize="20sp" />
+	        android:textSize="16sp"
+	        android:hint="@string/nfc_tag_technology_hint"/>
 
         <View
 			android:layout_width="fill_parent"
@@ -43,44 +51,28 @@
 			android:background="@android:color/darker_gray"
 			android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"/>
-	   
+
+	   <TextView
+	       android:id="@+id/nfcTagContentLbl"
+	       android:layout_width="fill_parent"
+	       android:layout_height="wrap_content"
+	       android:layout_marginTop="10dp"
+	       android:drawableLeft="@drawable/ic_nfc_tag_content"
+	       android:gravity="center_vertical"
+	       android:padding="5dp"
+	       android:text="@string/nfc_tag_content_lbl"
+	       android:textSize="20sp" />
+
 	    <TextView
-	        android:id="@+id/nfcOptionURI"
+	        android:id="@+id/nfcTagContentText"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="10dp"
-	        android:layout_marginTop="10dp"
-	        android:drawableLeft="@drawable/ic_nfc_uri"
-	        android:drawableRight="@drawable/ic_go"
+	        android:padding="5dp"
 	        android:gravity="center_vertical"
-	        android:onClick="onOptionSelected"
-	        android:text="@string/nfc_option_uri"
-	        android:textSize="20sp" />
-
-	    <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
-
-	    <TextView
-	        android:id="@+id/textToWrite"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:layout_marginBottom="10dp"
-	        android:layout_marginTop="10dp"
-	        android:hint="@string/nfc_write_hint"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-	    <Button
-	        android:id="@+id/toWriteBtn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:onClick="onClickButton"
-	        android:text="@string/button_write" />
-
+	        android:textSize="16sp"
+	        android:hint="@string/nfc_tag_content_hint"
+	        android:linksClickable="true"
+	        android:autoLink="web|email"/>
     </LinearLayout>
 </LinearLayout>

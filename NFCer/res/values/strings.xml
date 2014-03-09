@@ -9,16 +9,31 @@
     
     <string name="action_info_text">Developed by vicmonmena</string>
     
+    <!-- Main screen -->
     <string name="options_title">What do you want to do?</string>
     <string name="nfc_option_text">Write a text</string>
     <string name="nfc_option_text_hint">&#8230;</string>
     <string name="nfc_option_uri">Write an URI</string>
     <string name="nfc_option_uri_hint">&#8230;</string>
     
-    <string name="nfc_write_hint">&#8230;</string>
+    
+    <!-- Write tag screen -->
+    <string name="write_tag_info">Close a NFC tag to your smartphone, input a text and do click on "Write".</string>
+    <string name="write_tag_title">Input your text in the field and click on Write!</string>
+    <string name="nfc_write_hint">Input your text here</string>
     <string name="button_write">Write!</string>
     
     <string name="write_tag_validation">Please input text to write!</string>
     <string name="custom_write_dialog_title">Input your text or URI here</string>
     <string name="custom_write_dialog_button">Back</string>
+    
+    <!-- Read tag screen -->
+    <string name="read_tag_info">Move the tag closer to your smartphone in order to read the tag content</string>
+    <string name="read_tag_title">Move the tag closer to your smartphone</string>
+    
+    <string name="nfc_tag_technology_lbl">Supported technologies</string>
+    <string name="nfc_tag_content_lbl">Tag content</string>
+    
+    <string name="nfc_tag_technology_hint">Tag technology</string>
+    <string name="nfc_tag_content_hint">Tag content</string>
 </resources>
