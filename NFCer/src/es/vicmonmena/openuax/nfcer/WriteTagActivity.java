@@ -2,11 +2,17 @@ package es.vicmonmena.openuax.nfcer;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+
+import es.vicmonmena.openuax.nfcer.utils.NFCerUtils;
 
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Bundle;
@@ -31,6 +37,21 @@ public class WriteTagActivity extends Activity{
 	private static final String TAG = "WriteTagActivity";
 	
 	/**
+	 * 
+	 */
+	private NfcAdapter nfcAdapter;
+	
+	/**
+	 *  Contendrá la información extraida de la etiqueta NFC
+	 */
+    private PendingIntent pendingIntent;
+    
+    /**
+     * Tipo de escritura que vamos a realizar (RTD_TEXT, RTD_URI ...).
+     */
+    private String writtingType;
+    
+	/**
      * Etiqueta NFC
      */
     private Tag myTag;
@@ -42,11 +63,41 @@ public class WriteTagActivity extends Activity{
         
         getActionBar().setDisplayShowHomeEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        // Comprobar que el NFCAdapter está disponible
+        nfcAdapter = NfcAdapter.getDefaultAdapter(WriteTagActivity.this);
+        
+        if (nfcAdapter == null) {
+        	Toast.makeText(WriteTagActivity.this, 
+        		getString(R.string.error_nfc_not_available), 
+        		Toast.LENGTH_SHORT).show();
+        	finish();
+        	return;
+        }
+        
+        // Rellenamos con los datos de la etiqueta leída
+        pendingIntent = PendingIntent.getActivity(this, 0, new Intent(
+        	this,getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        writtingType = getIntent()
+        	.getStringExtra("es.vicmonmena.openuax.nfcer.writtingtype");
 	}
 	
 	@Override
+    protected void onPause() {
+    	super.onPause();
+    	Log.d(TAG, "onPause");
+    	nfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	Log.d(TAG, "onResume");
+    	nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+    }
+    
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.base_menu, menu);
         return true;
     }
@@ -63,6 +114,14 @@ public class WriteTagActivity extends Activity{
         }
     }
     
+    @Override
+    protected void onNewIntent(Intent intent) {
+    	
+    	Log.d(TAG, "onNewIntent...");
+    	// Obtenemos la tecnología de la etiqueta BFC que hemos leído
+    	myTag=intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+    }
+    
     /**
      * Captura el evento click de los botones que tengan definido este método.
      * @param view
@@ -76,15 +135,19 @@ public class WriteTagActivity extends Activity{
 		    	EditText text = (EditText) findViewById(R.id.textToWrite);
 		    	if (!TextUtils.isEmpty(text.getText())) {
 		    		try {
+		    			
 						if (write(text.getText().toString())) {
-							Toast.makeText(WriteTagActivity.this, text.getText() + " was written successfully!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(WriteTagActivity.this, 
+								text.getText().toString() + " " + 
+								getString(R.string.msg_tag_written), 
+								Toast.LENGTH_SHORT).show();
 						} else {
-							Toast.makeText(WriteTagActivity.this, "Tag not found!", Toast.LENGTH_SHORT).show();
+							Toast.makeText(WriteTagActivity.this, getString(R.string.error_tag), Toast.LENGTH_SHORT).show();
 						}
 					} catch (IOException e) {
-						Toast.makeText(WriteTagActivity.this, "I/O Exception", Toast.LENGTH_SHORT).show();
+						Log.e(TAG, "I/O Exception");
 					} catch (FormatException e) {
-						Toast.makeText(WriteTagActivity.this, "Format Exception", Toast.LENGTH_SHORT).show();
+						Log.e(TAG, "Format Exception");
 					}
 		    	} else {
 		    		Toast.makeText(WriteTagActivity.this, getString(R.string.write_tag_validation), Toast.LENGTH_SHORT).show();
@@ -104,11 +167,19 @@ public class WriteTagActivity extends Activity{
     private boolean write(String text) throws IOException, FormatException {
 	
     	boolean result = false;
-		Log.i(TAG, "Writing NFC tag ...");
-		//Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+		Log.d(TAG, "Writing NFC tag ...");
 		
-		//if (myTag != null) {
-			NdefRecord[] records = {createRecord(text)};
+		if (myTag != null) {
+			
+			NdefRecord[] records = null;
+			
+			if(writtingType.equals(NFCerUtils.RTD_TEXT)) {
+				records = new NdefRecord[]{createTextRecord(text)};
+			}
+			else if (writtingType.equals(NFCerUtils.RTD_URI)) {
+				records = new NdefRecord[]{createUriRecord(text)};
+			}
+			
 			NdefMessage message = new NdefMessage(records);
 			
 			// Obtener una instancia de Ndef para la etiqueta
@@ -122,18 +193,19 @@ public class WriteTagActivity extends Activity{
 			
 			// Cerrar la conexión
 			ndef.close();
-		//}
-		
+			
+			result = true;
+		}
 		return result;
 	}
     
     /**
-     * Crea un NDEF record para escribir en la etiqueta
+     * Crea un NDEF TEXT Record para escribir en la etiqueta
      * @param text
      * @return
      * @throws UnsupportedEncodingException
      */
-    private NdefRecord createRecord(String text) 
+    private NdefRecord createTextRecord(String text) 
     	throws UnsupportedEncodingException {
     	
     	String lang = "es";
@@ -158,4 +230,28 @@ public class WriteTagActivity extends Activity{
     	
     	return record;
     }
+    
+    /**
+     * Crea un NDEF URI Record para escribir en la etiqueta
+     * @param text
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    private NdefRecord createUriRecord(String text) 
+    	throws UnsupportedEncodingException {
+    	
+    	byte[] uriBytes = text.getBytes(Charset.forName("US-ASCII"));
+    	
+    	// Se añade un byte para el prefijo de la URI, el primero del payload
+    	byte[] payload = new byte[uriBytes.length + 1];
+    	payload[0] = 0x01;
+    	
+    	// Añadimos el resto de la URI al payload
+    	System.arraycopy(uriBytes, 0, payload, 1, uriBytes.length);
+    	
+    	NdefRecord record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN, 
+        		NdefRecord.RTD_URI, new byte[0], payload);
+    	
+    	return record;
+	}
 }

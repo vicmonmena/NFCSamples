@@ -9,6 +9,10 @@
     
     <string name="action_info_text">Developed by vicmonmena</string>
     
+    <string name="error_nfc_not_available">NFC not available</string>
+    <string name="error_tag">Tag not found! Try to move the tag closer to the smartphone again</string>
+    <string name="msg_tag_written">was written successfully!</string>
+    
     <!-- Main screen -->
     <string name="options_title">What do you want to do?</string>
     <string name="nfc_option_text">Write a text</string>

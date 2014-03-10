@@ -87,7 +87,8 @@ public class ReadTagActivity extends Activity{
         nfcAdapter = NfcAdapter.getDefaultAdapter(ReadTagActivity.this);
         
         if (nfcAdapter == null) {
-        	Toast.makeText(ReadTagActivity.this, "NFC not available", 
+        	Toast.makeText(ReadTagActivity.this, 
+        		getString(R.string.error_nfc_not_available), 
         		Toast.LENGTH_SHORT).show();
         	finish();
         	return;
@@ -95,7 +96,8 @@ public class ReadTagActivity extends Activity{
         
         // Rellenamos con los datos de la etiqueta leída
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(
-        	this,getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        	ReadTagActivity.this,getClass())
+        	.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         
         // Control de todos los tipos MIME para NDEF_DISCOVERED:
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
@@ -144,7 +146,7 @@ public class ReadTagActivity extends Activity{
     @Override
     protected void onNewIntent(Intent intent) {
     	
-    	Log.i(TAG, "onNewIntent...");
+    	Log.d(TAG, "onNewIntent...");
     	
     	String action = intent.getAction();
     	
@@ -172,17 +174,15 @@ public class ReadTagActivity extends Activity{
     
     @Override
     protected void onPause() {
-    	// TODO Auto-generated method stub
     	super.onPause();
-    	Log.i(TAG, "onPause");
+    	Log.d(TAG, "onPause");
     	nfcAdapter.disableForegroundDispatch(this);
     }
 
     @Override
     protected void onResume() {
-    	// TODO Auto-generated method stub
     	super.onResume();
-    	Log.i(TAG, "onResume");
+    	Log.d(TAG, "onResume");
     	nfcAdapter.enableForegroundDispatch(this, pendingIntent, 
     		intentFiltersArray, techLists);
     }
@@ -229,7 +229,7 @@ public class ReadTagActivity extends Activity{
      * @param rawMsgs
      */
     private String read(Parcelable[] rawMsgs) {
-    	Log.i(TAG, "Reading NFC tag ...");
+    	Log.d(TAG, "Reading NFC tag ...");
     	
     	String content = "";
     	NdefMessage[] msgs = new NdefMessage[rawMsgs.length];
