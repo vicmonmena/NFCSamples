@@ -1,7 +1,9 @@
 package es.vicmonmena.openuax.nfcer;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,10 +23,28 @@ public class MainActivity extends Activity {
 	 */
 	private static final String TAG = "MainActivity";
     
+	/**
+	 * 
+	 */
+	private NfcAdapter nfcAdapter;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        nfcAdapter = NfcAdapter.getDefaultAdapter(MainActivity.this);
+        
+        // Comprobar que el NFCAdapter está disponible
+        nfcAdapter = NfcAdapter.getDefaultAdapter(MainActivity.this);
+        
+        if (nfcAdapter == null) {
+        	Toast.makeText(MainActivity.this, 
+        		getString(R.string.error_nfc_not_available), 
+        		Toast.LENGTH_SHORT).show();
+        	finish();
+        	return;
+        }
     }
 
 
@@ -40,7 +60,6 @@ public class MainActivity extends Activity {
 
         switch (item.getItemId()) {
         	case R.id.action_read:
-        		Log.d(TAG, "Go to ead tag");
         		Intent intent = new Intent(MainActivity.this, ReadTagActivity.class);
         		startActivity(intent);
         		return true;
@@ -57,22 +76,29 @@ public class MainActivity extends Activity {
      * @param view
      */
     public void onOptionSelected(View view) {
-    	
-    	Intent intent = null;
-    	
-    	switch (view.getId()) {
-			case R.id.nfcOptionText:
-				Log.d(TAG, "Go to write text");
-				intent = new Intent(MainActivity.this, WriteTagActivity.class);
-				break;
-			case R.id.nfcOptionURI:
-				Log.d(TAG, "Go to write URI");
-				intent = new Intent(MainActivity.this, WriteTagActivity.class);
-				break;
-			default:
-				break;
-		} 
-    	
+    	Log.i(TAG, "onOptionSelected");
+    	Intent intent = new Intent(MainActivity.this, WriteTagActivity.class);
+    	intent.putExtra("es.vicmonmena.openuax.nfcer.writtingtype",
+			(String)view.getTag());
     	startActivity(intent);
+    }
+    
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	Log.i(TAG, "onPause");
+    	nfcAdapter.disableForegroundDispatch(this);
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	Log.i(TAG, "onResume");
+    	
+    	Intent i = new Intent(MainActivity.this, ReadTagActivity.class);
+    	PendingIntent pIntent = PendingIntent.getActivity(
+    		this, 0, i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+            
+    	nfcAdapter.enableForegroundDispatch(this, pIntent, null, null);
     }
 }

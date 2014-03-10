@@ -10,7 +10,7 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/options_title" 
+            android:text="@string/write_tag_info" 
             android:textSize="20sp"
             android:gravity="center_horizontal"
             android:padding="10dp"
@@ -24,7 +24,7 @@
 	    android:orientation="vertical"
 	    android:background="@drawable/custom_shape">
 
-	    <TextView
+	    <EditText
 	        android:id="@+id/textToWrite"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -39,8 +39,10 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
+	        android:background="@drawable/custom_shape_red"
 	        android:onClick="onClickButton"
-	        android:text="@string/button_write" />
+	        android:text="@string/button_write" 
+	        android:textColor="#FFFFFF"/>
 
     </LinearLayout>
 </LinearLayout>

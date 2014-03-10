@@ -2,7 +2,7 @@ package es.vicmonmena.openuax.nfcer.utils;
 
 import android.nfc.tech.Ndef;
 
-public class NFCerUtils {
+public class NFCerUtils implements Ctes{
 
 	/**
      * 

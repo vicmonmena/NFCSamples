@@ -35,7 +35,9 @@
 	        android:gravity="center_vertical"
 	        android:onClick="onOptionSelected"
 	        android:text="@string/nfc_option_text"
-	        android:textSize="20sp" />
+	        android:textSize="20sp" 
+	        android:clickable="true"
+	        android:tag="rtd_text"/>
 
         <View
 			android:layout_width="fill_parent"
@@ -55,7 +57,9 @@
 	        android:gravity="center_vertical"
 	        android:onClick="onOptionSelected"
 	        android:text="@string/nfc_option_uri"
-	        android:textSize="20sp" />
+	        android:textSize="20sp" 
+	        android:clickable="true"
+	        android:tag="rtd_uri"/>
 
 	    <View
             android:layout_width="fill_parent"
