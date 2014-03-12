@@ -1,10 +1,13 @@
 package es.vicmonmena.openuax.nfcer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,7 +67,18 @@ public class MainActivity extends Activity {
         		startActivity(intent);
         		return true;
 			case R.id.action_info:
-				Toast.makeText(this, getString(R.string.action_info_text), Toast.LENGTH_LONG).show();
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(R.string.action_info);
+				builder.setMessage(Html.fromHtml(getString(R.string.action_info_text)));
+				builder.setNeutralButton(R.string.dialog_done, 
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.dismiss();
+						}
+					});
+				builder.create().show();
+				
+				//Toast.makeText(this, getString(R.string.action_info_text), Toast.LENGTH_LONG).show();
 				return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -24,13 +24,24 @@
 	    android:orientation="vertical"
 	    android:background="@drawable/custom_shape">
 
+        <Spinner
+            android:id="@+id/uriPrefixSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/uri_prefix_prompt"
+            android:prompt="@string/uri_prefix_prompt"
+            android:visibility="gone" 
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"/>
+
 	    <EditText
 	        android:id="@+id/textToWrite"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_marginBottom="10dp"
-	        android:layout_marginTop="10dp"
+	        android:layout_marginTop="5dp"
 	        android:hint="@string/nfc_write_hint"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 

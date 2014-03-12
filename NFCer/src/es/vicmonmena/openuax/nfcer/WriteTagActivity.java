@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-import es.vicmonmena.openuax.nfcer.utils.NFCerUtils;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -21,8 +19,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+import es.vicmonmena.openuax.nfcer.utils.NFCerUtils;
 
 /**
  * 
@@ -56,6 +57,8 @@ public class WriteTagActivity extends Activity{
      */
     private Tag myTag;
     
+    private Spinner uriPrefix;
+    
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +83,21 @@ public class WriteTagActivity extends Activity{
         	this,getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
         writtingType = getIntent()
         	.getStringExtra("es.vicmonmena.openuax.nfcer.writtingtype");
+        
+        if (writtingType.equals(NFCerUtils.RTD_URI)) {
+        	uriPrefix = (Spinner) findViewById(R.id.uriPrefixSpinner);
+        	uriPrefix.setVisibility(View.VISIBLE);
+        	
+        	// Application of the Array to the Spinner
+        	ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+        		WriteTagActivity.this,
+        		android.R.layout.simple_spinner_item,
+        		NFCerUtils.URI_PREFIXES);
+        	spinnerArrayAdapter.setDropDownViewResource(
+        		android.R.layout.simple_spinner_dropdown_item);
+        	uriPrefix.setAdapter(spinnerArrayAdapter);
+        	uriPrefix.setSelection(0);
+        }
 	}
 	
 	@Override
@@ -175,9 +193,9 @@ public class WriteTagActivity extends Activity{
 			
 			if(writtingType.equals(NFCerUtils.RTD_TEXT)) {
 				records = new NdefRecord[]{createTextRecord(text)};
-			}
-			else if (writtingType.equals(NFCerUtils.RTD_URI)) {
-				records = new NdefRecord[]{createUriRecord(text)};
+			} else if (writtingType.equals(NFCerUtils.RTD_URI)) {
+				records = new NdefRecord[]{createUriRecord(
+					text, (String) uriPrefix.getSelectedItem())};
 			}
 			
 			NdefMessage message = new NdefMessage(records);
@@ -234,17 +252,20 @@ public class WriteTagActivity extends Activity{
     /**
      * Crea un NDEF URI Record para escribir en la etiqueta
      * @param text
+     * @param prefix
      * @return
      * @throws UnsupportedEncodingException
      */
-    private NdefRecord createUriRecord(String text) 
+    private NdefRecord createUriRecord(String text, String prefix) 
     	throws UnsupportedEncodingException {
     	
-    	byte[] uriBytes = text.getBytes(Charset.forName("US-ASCII"));
     	
+    	byte[] prefixBytes = prefix.getBytes(Charset.forName("US-ASCII"));
     	// Se añade un byte para el prefijo de la URI, el primero del payload
-    	byte[] payload = new byte[uriBytes.length + 1];
+    	byte[] payload = new byte[prefixBytes.length + 1];
     	payload[0] = 0x01;
+    	
+    	byte[] uriBytes = text.getBytes(Charset.forName("US-ASCII"));
     	
     	// Añadimos el resto de la URI al payload
     	System.arraycopy(uriBytes, 0, payload, 1, uriBytes.length);

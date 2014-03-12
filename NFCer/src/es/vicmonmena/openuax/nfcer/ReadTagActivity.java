@@ -288,7 +288,7 @@ public class ReadTagActivity extends Activity{
          * the URI.
          */
         int pre = (int)payload[0];
-        String prefix = NFCerUtils.URI_PREFIXES[pre];
+        String prefix = NFCerUtils.URI_PREFIXES[pre-1];
         String uriStr = new StringBuilder()
             .append(prefix).append(new String(payload, 1, payload.length - 1))
             .toString();

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NFCer</string>
+    
+    <string name="action_info">Info</string>
+    <string name="action_write">Escribir Etiqueta</string>
+    <string name="action_read">Leer Etiqueta</string>
+    
+    <string name="action_info_text">Desarrollado por @vicmonmena</string>
+    
+    <string name="error_nfc_not_available">NFC no disponible</string>
+    <string name="error_tag">Etiqueta no encontrada! Inténtalo volviéndola a acercar a tu smartphone</string>
+    <string name="msg_tag_written">was written successfully!</string>
+    
+    <string name="dialog_done">Entendido</string>
+    
+    <!-- Main screen -->
+    <string name="options_title">¿Qué quieres hacer?</string>
+    <string name="nfc_option_text">Escribir un texto</string>
+    <string name="nfc_option_text_hint">&#8230;</string>
+    <string name="nfc_option_uri">Escribir una URI</string>
+    <string name="nfc_option_uri_hint">&#8230;</string>
+    
+    
+    <!-- Write tag screen -->
+    <string name="write_tag_info">Acerca una etiqueta NFC a tu smartphone, escribe un texto y pulsa en "Escribir".</string>
+    <string name="write_tag_title">Rellena el campo y pulsa "Escribir""!</string>
+    <string name="nfc_write_hint">Escribe aquí</string>
+    <string name="button_write">Escribir!</string>
+    
+    <string name="write_tag_validation">Por favor, introduce un texto!</string>
+    <string name="uri_prefix_prompt">Prefijo</string>
+    
+    <!-- Read tag screen -->
+    <string name="read_tag_info">Acerca la etiqueta a tu smarphone para que lea el contenido</string>
+    <string name="read_tag_title">Acerca la etiqueta a tu smartphone</string>
+    
+    <string name="nfc_tag_technology_lbl">Tecnología soportada</string>
+    <string name="nfc_tag_type_lbl">Formato de los datos</string>
+    <string name="nfc_tag_content_lbl">Contenido de la etiqueta</string>
+    
+    <string name="nfc_tag_technology_hint">Tecnología</string>
+    <string name="nfc_tag_type_hint">Formato</string>
+    <string name="nfc_tag_content_hint">Contenido</string>
+</resources>

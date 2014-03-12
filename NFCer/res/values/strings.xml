@@ -7,11 +7,13 @@
     <string name="action_write">Write Tag</string>
     <string name="action_read">Read Tag</string>
     
-    <string name="action_info_text">Developed by vicmonmena</string>
+    <string name="action_info_text">Developed by @vicmonmena</string>
     
     <string name="error_nfc_not_available">NFC not available</string>
     <string name="error_tag">Tag not found! Try to move the tag closer to the smartphone again</string>
     <string name="msg_tag_written">was written successfully!</string>
+    
+    <string name="dialog_done">OK</string>
     
     <!-- Main screen -->
     <string name="options_title">What do you want to do?</string>
@@ -28,8 +30,7 @@
     <string name="button_write">Write!</string>
     
     <string name="write_tag_validation">Please input text to write!</string>
-    <string name="custom_write_dialog_title">Input your text or URI here</string>
-    <string name="custom_write_dialog_button">Back</string>
+    <string name="uri_prefix_prompt">Prefix</string>
     
     <!-- Read tag screen -->
     <string name="read_tag_info">Move the tag closer to your smartphone in order to read the tag content</string>

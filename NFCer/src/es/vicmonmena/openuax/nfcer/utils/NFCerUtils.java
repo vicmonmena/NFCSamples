@@ -8,7 +8,6 @@ public class NFCerUtils implements Ctes{
      * 
      */
     public static final String[] URI_PREFIXES = new String[] {
-        "",
         "http://www.",
         "https://www.",
         "http://",

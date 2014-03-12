@@ -8,7 +8,7 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
     
-    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.NFC" android:required="true" />
     
     <application
         android:allowBackup="true"
